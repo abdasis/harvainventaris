@@ -64,7 +64,7 @@
                 </li>
 
                 <li>
-                    <a href="#sidebarDashboards" data-toggle="collapse">
+                    <a href="{{ route('kategori-barang.index') }}">
                         <i class="mdi mdi-notebook-multiple"></i>
                         <span> Category </span>
                     </a>

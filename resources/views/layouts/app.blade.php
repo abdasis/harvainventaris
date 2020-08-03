@@ -28,7 +28,9 @@
     </head>
 
     <body class="loading" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": {"size": "default", "showuser": true}, "topbar": {"color": "light"}, "showRightSidebarOnPageLoad": true}'>
-
+        @if (Session::has('status'))
+            @include('sweetalert::alert')
+        @endif
         <!-- Begin page -->
         <div id="wrapper">
 

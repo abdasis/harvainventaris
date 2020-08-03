@@ -17,6 +17,8 @@ class CreateBarangsTable extends Migration
             $table->id();
             $table->string('nama_produk', 100);
             $table->longText('diskripsi_barang');
+            $table->string('brands', 100)->nullable();
+            $table->
             $table->string('kategori_barang', 100);
             $table->string('harga_beli', 100);
             $table->string('harga_jual', 100);
