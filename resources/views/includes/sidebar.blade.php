@@ -57,7 +57,7 @@
                 <li class="menu-title mt-2">Data Master</li>
 
                 <li>
-                    <a href="#sidebarDashboards" data-toggle="collapse">
+                    <a href="{{ route('brands.index') }}">
                         <i class="mdi mdi-tag-multiple-outline"></i>
                         <span> Brands </span>
                     </a>

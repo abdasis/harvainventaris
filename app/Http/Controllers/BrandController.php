@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BrandController extends Controller
 {
@@ -13,7 +18,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $brands = Brand::all();
+        return view('pages.brands.index')->withBrands($brands);
     }
 
     /**
@@ -23,7 +29,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.brands.create');
     }
 
     /**
@@ -34,7 +40,21 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $brands = new Brand();
+        $brands->name = $request->get('name');
+        $brands->status = $request->get('status');
+        if ($request->hasFile('logo_brand')) {
+            $images = $request->file('logo_brand');
+            $images_name = Str::slug($request->get('name'), '-') . '.' . $images->getClientOriginalExtension();
+            $images->move(public_path('brand-logos'), $images_name);
+            $brands->logo_brand = $images_name;
+        }
+        $brands->save();
+        if ($brands) {
+            Session::flash('status', 'Data brand berhasil di tambahkan');
+            Alert::success('Berhasil', 'Data berhasil di tambahkan');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -56,7 +76,8 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        //
+        $brand = Brand::find($id);
+        return view('pages.brands.edit')->withBrand($brand);
     }
 
     /**
@@ -68,7 +89,26 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $brands = Brand::find($id);
+        $brands->name = $request->get('name');
+        $brands->status = $request->get('status');
+        if ($request->hasFile('logo_brand')) {
+            if ($brands->logo_brand && file_exists(public_path('brand-logos', $brands->logo_brand))) {
+                File::delete(public_path('brand-logos', $brands->logo_brand));
+            }
+            $images = $request->file('logo_brand');
+            $images_name = Str::slug($request->get('name'), '-') . '.' . $images->getClientOriginalExtension();
+            $images->move(public_path('brand-logos'), $images_name);
+            $brands->logo_brand = $images_name;
+        }else{
+            $brands->logo_brand = $brands->logo_brand;
+        }
+        $brands->save();
+        if ($brands) {
+            Session::flash('status', 'Data brand berhasil di tambahkan');
+            Alert::success('Berhasil', 'Data berhasil di tambahkan');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -79,6 +119,12 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $brand = Brand::find($id);
+        $brand->delete();
+        if ($brand) {
+            Session::flash('status', 'Data berhasil dihapus');
+            Alert::success('Berhasil', 'Data berhasil di hapus');
+            return redirect()->back();
+        }
     }
 }

@@ -7,11 +7,11 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Kategori</a></li>
-                    <li class="breadcrumb-item active">Daftar Kategori</li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Brand</a></li>
+                    <li class="breadcrumb-item active">Daftar Brands</li>
                 </ol>
             </div>
-            <h4 class="page-title">Kategori</h4>
+            <h4 class="page-title">Brands</h4>
         </div>
     </div>
 </div>
@@ -19,42 +19,46 @@
 
 <div class="row">
     <div class="col-md-12 mb-2">
-        <button class="btn btn-sm btn-blue btn-add">Tambah Kategori</button>
+        <button class="btn btn-blue btn-add"> <i class="fa fa-plus mr-1"></i> Tambah Brands</button>
     </div>
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title">Semua Kategori</h4>
+                <h4 class="header-title">Semua Brands</h4>
                 <p class="text-muted font-13 mb-4">
-                    Daftar kategori dibawah ini digunakan untuk kategori produk saat penambahan barang
+                    Daftar brands dibawah ini digunakan untuk kategori produk saat penambahan barang
                 </p>
 
                 <table id="basic-datatable" class="table table-sm table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Kategori</th>
+                            <th>Brand</th>
+                            <th>Logo</th>
                             <th>Status</th>
                             <th>Dibuat</th>
                             <th>Option</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($categories as $key => $category)
+                        @foreach ($brands as $key => $brand)
                             <tr>
                                 <td>{{ $key+1 }}</td>
-                                <td>{{ $category->name }}</td>
+                                <td>{{ $brand->name }}</td>
                                 <td>
-                                    @if ($category->status == 'active')
-                                        <div class="badge badge-soft-success">{{ $category->status }}</div>
+                                    <img height=50px" class="img-responsive rounded-pill" src="{{ asset('brand-logos') . '/' . $brand->logo_brand }}" alt="" srcset="">
+                                </td>
+                                <td>
+                                    @if ($brand->status == 'active')
+                                        <div class="badge badge-soft-success">{{ $brand->status }}</div>
                                     @else
-                                        <div class="badge badge-soft-danger">{{ $category->status }}</div>
+                                        <div class="badge badge-soft-danger">{{ $brand->status }}</div>
                                     @endif
                                 </td>
-                                <td>{{ date('d-m-Y', strtotime($category->created_at)) }}</td>
+                                <td>{{ date('d-m-Y', strtotime($brand->created_at)) }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning btn-edit mr-1" data-id="{{ $category->id }}"><i class="fas fa-pencil-alt"></i></button>
-                                    <button type="submit" class="btn btn-danger btn-sm waves-ripple mr-1 btn-hapus" data-id="{{ $category->id }}">
+                                    <button class="btn btn-sm btn-warning btn-edit mr-1" data-id="{{ $brand->id }}"><i class="fas fa-pencil-alt"></i></button>
+                                    <button type="submit" class="btn btn-danger btn-sm waves-ripple mr-1 btn-hapus" data-id="{{ $brand->id }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
@@ -104,11 +108,11 @@
     $(window).on('load', function(){
         $('.btn-add').on('click', function(){
             $.ajax({
-                url: "/admin/kategori-barang/create",
+                url: "/admin/brands/create",
                 method: 'GET',
                 success: function(data){
                     $('#standard-modal').find('.modal-body').html(data)
-                    $('#standard-modalLabel').text('Tambah Kategori')
+                    $('#standard-modalLabel').text('Tambah Brands')
                     $('#standard-modal').modal('show')
                 }
             })
@@ -117,11 +121,11 @@
         $('.btn-edit').on('click', function(){
             var id = $(this).data('id');
             $.ajax({
-                url: "/admin/kategori-barang/"+id+'/edit',
+                url: "/admin/brands/"+id+'/edit',
                 method: 'GET',
                 success: function(data){
                     $('#standard-modal').find('.modal-body').html(data)
-                    $('#standard-modalLabel').text('Sunting Kategori')
+                    $('#standard-modalLabel').text('Sunting Brands')
                     $('#standard-modal').modal('show')
                 }
             })
@@ -141,7 +145,7 @@
                 }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                    url: "/admin/kategori-barang/" + id,
+                    url: "/admin/brands/" + id,
                     type: 'POST',
                     data: {id:id, _token:"{{ csrf_token() }}", _method:"DELETE"},
                     success: function (data) {
@@ -153,7 +157,7 @@
                         setTimeout(function(){
                             location.reload(true)
                         }, 1000)
-                        
+
                     }
                 });
             }
