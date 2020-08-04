@@ -16,6 +16,14 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12">
+            @if (Session::has('status'))
+                <div class="alert alert-success">{{ Session::get('status') }}</div>
+            @endif
+        </div>
+    </div>
+
     <form action="{{ route('barang.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
@@ -35,7 +43,7 @@
 
                     <div class="form-group mb-3">
                         <label for="product-description">Product Description <span class="text-danger">*</span></label>
-                        <textarea class="form-control" name="diksirpsi" id="product-description" rows="5" placeholder="Please enter description"></textarea>
+                        <textarea class="form-control" name="diskripsi" id="product-description" rows="5" placeholder="Please enter description"></textarea>
                     </div>
 
                     <div class="form-group mb-3">
@@ -83,6 +91,12 @@
                         <input type="text" class="form-control" id="product-price" name="harga_beli" placeholder="Masukan harga beli">
                     </div>
 
+                    <div class="form-group mb-3">
+                        <label for="product-price">Stok <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="product-price" name="stok" placeholder="1">
+                    </div>
+
+
                     <div class="form-group">
                         <button class="btn btn-blue" type="submit"><i class="fa fa-save mr-1"></i>Simpan Barang</button>
                     </div>
@@ -96,7 +110,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="text-uppercase bg-soft-success text-success p-2 mt-0 mb-3">Upload foto produk</h5>
-                        <input type="file" data-plugins="dropify" data-height="300" />
+                        <input type="file" name="gambar_produk" data-plugins="dropify" data-height="300" />
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->
             </div> <!-- end col-->

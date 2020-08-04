@@ -15,16 +15,17 @@ class CreateBarangsTable extends Migration
     {
         Schema::create('barangs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_produk', 100);
-            $table->longText('diskripsi_barang');
-            $table->string('brands', 100)->nullable();
-            $table->
-            $table->string('kategori_barang', 100);
-            $table->string('harga_beli', 100);
+            $table->string('nama', 100);
+            $table->longText('diskripsi');
+            $table->string('reference', 100)->nullable();
+            $table->string('spesifikasi', 100);
+            $table->string('kategori', 100);
+            $table->string('brand', 100);
+            $table->string('supplier', 100);
             $table->string('harga_jual', 100);
-            $table->string('status_barang', 100);
-            $table->string('stok_barang', 100);
-            $table->string('gambar_barang', 100);
+            $table->string('harga_beli', 100);
+            $table->integer('stok')->nullable();
+            $table->string('gambar', 100);
             $table->timestamps();
         });
     }

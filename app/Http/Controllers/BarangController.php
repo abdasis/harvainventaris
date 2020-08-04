@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BarangController extends Controller
 {
@@ -16,7 +19,8 @@ class BarangController extends Controller
      */
     public function index()
     {
-        return view('pages.barang.index');
+        $barangs = Barang::all();
+        return view('pages.barang.index')->withBarangs($barangs);
     }
 
     /**
@@ -40,8 +44,31 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
-    }
+        $barang = new Barang();
+        $barang->nama = $request->get('name');
+        $barang->diskripsi = $request->get('diskripsi');
+        $barang->reference = $request->get('diskripsi');
+        $barang->spesifikasi = $request->get('spesifikasi');
+        $barang->kategori = $request->get('kategori');
+        $barang->brand = $request->get('brand');
+        $barang->supplier = $request->get('supplier');
+        $barang->harga_jual = $request->get('harga_jual');
+        $barang->harga_beli = $request->get('harga_beli');
+        $barang->stok = $request->get('stok');
+        if ($request->hasFile('gambar_produk')) {
+            $gambar = $request->file('gambar_produk');
+            $nama_gambar = $gambar->getClientOriginalName();
+            $gambar->move(public_path('gambar-produk', $nama_gambar));
+            $barang->gambar = $nama_gambar;
+        }
+        $barang->save();
+        if ($barang) {
+            Session::flash('status','Barang berhasil ditambahkan');
+            Alert::success('Berhasil', 'Barang berhasil ditambahkan');
+        }
+
+        return redirect()->back();
+     }
 
     /**
      * Display the specified resource.
