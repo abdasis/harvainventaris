@@ -22,6 +22,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('barang', 'BarangController');
     Route::resource('kategori-barang', 'CategoryController');
     Route::resource('brands', 'BrandController');
+    Route::resource('suppliers', 'SupplierController');
 });
 
 Auth::routes();

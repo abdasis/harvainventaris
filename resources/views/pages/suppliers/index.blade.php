@@ -7,11 +7,11 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Kategori</a></li>
-                    <li class="breadcrumb-item active">Daftar Kategori</li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Supplier</a></li>
+                    <li class="breadcrumb-item active">Daftar Supplier</li>
                 </ol>
             </div>
-            <h4 class="page-title">Kategori</h4>
+            <h4 class="page-title">Data Supplier</h4>
         </div>
     </div>
 </div>
@@ -24,7 +24,9 @@
         @endif
     </div>
     <div class="col-md-12 mb-2">
-        <button class="btn btn-sm btn-blue btn-add">Tambah Kategori</button>
+        <a href="{{ route('suppliers.create') }}">
+            <button class="btn btn-sm btn-blue btn-add">Tambah Supplier</button>
+        </a>
     </div>
     <div class="col-12">
         <div class="card">
@@ -38,28 +40,34 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Kategori</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Telepon</th>
+                            <th>Alamat</th>
                             <th>Status</th>
-                            <th>Dibuat</th>
                             <th>Option</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($categories as $key => $category)
+                        @foreach ($suppliers as $key => $supplier)
                             <tr>
                                 <td>{{ $key+1 }}</td>
-                                <td>{{ $category->name }}</td>
+                                <td>{{ $supplier->name }}</td>
+                                <td>{{ $supplier->email }}</td>
+                                <td>{{ $supplier->nomor_telepon }}</td>
+                                <td>{{ $supplier->alamat }}</td>
                                 <td>
-                                    @if ($category->status == 'active')
-                                        <div class="badge badge-soft-success">{{ $category->status }}</div>
+                                    @if ($supplier->status == 'active')
+                                        <div class="badge badge-soft-success">{{ $supplier->status }}</div>
                                     @else
-                                        <div class="badge badge-soft-danger">{{ $category->status }}</div>
+                                        <div class="badge badge-soft-danger">{{ $supplier->status }}</div>
                                     @endif
                                 </td>
-                                <td>{{ date('d-m-Y', strtotime($category->created_at)) }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning btn-edit mr-1" data-id="{{ $category->id }}"><i class="fas fa-pencil-alt"></i></button>
-                                    <button type="submit" class="btn btn-danger btn-sm waves-ripple mr-1 btn-hapus" data-id="{{ $category->id }}">
+                                    <a href="{{ route('suppliers.edit', $supplier->id) }}">
+                                        <button class="btn btn-sm btn-warning btn-edit mr-1" type="submit"><i class="fas fa-pencil-alt"></i></button>
+                                    </a>
+                                    <button type="submit" class="btn btn-danger btn-sm waves-ripple mr-1 btn-hapus" data-id="{{ $supplier->id }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
@@ -107,46 +115,22 @@
 
 <script>
     $(window).on('load', function(){
-        $('.btn-add').on('click', function(){
-            $.ajax({
-                url: "/admin/kategori-barang/create",
-                method: 'GET',
-                success: function(data){
-                    $('#standard-modal').find('.modal-body').html(data)
-                    $('#standard-modalLabel').text('Tambah Kategori')
-                    $('#standard-modal').modal('show')
-                }
-            })
-        })
-
-        $('.btn-edit').on('click', function(){
-            var id = $(this).data('id');
-            $.ajax({
-                url: "/admin/kategori-barang/"+id+'/edit',
-                method: 'GET',
-                success: function(data){
-                    $('#standard-modal').find('.modal-body').html(data)
-                    $('#standard-modalLabel').text('Sunting Kategori')
-                    $('#standard-modal').modal('show')
-                }
-            })
-        })
 
         $('.btn-hapus').on('click', function(e){
             e.preventDefault();
             let id =  $(this).data('id');
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Yakin hapus data ini?',
+                text: "Data yang dihapus tidak dapat di kembalikan!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Ya, Hapus'
                 }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                    url: "/admin/kategori-barang/" + id,
+                    url: "/admin/suppliers/" + id,
                     type: 'POST',
                     data: {id:id, _token:"{{ csrf_token() }}", _method:"DELETE"},
                     success: function (data) {

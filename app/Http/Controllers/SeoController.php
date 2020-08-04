@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Supplier;
+use App\Models\Seo;
 use Illuminate\Http\Request;
 
-class BarangController extends Controller
+class SeoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,7 @@ class BarangController extends Controller
      */
     public function index()
     {
-        return view('pages.barang.index');
+        //
     }
 
     /**
@@ -26,10 +24,7 @@ class BarangController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $brands = Brand::all();
-        $suppliers = Supplier::all();
-        return view('pages.barang.create')->withCategories($categories)->withBrands($brands)->withSuppliers($suppliers);
+        //
     }
 
     /**
@@ -40,16 +35,16 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Seo  $seo
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Seo $seo)
     {
         //
     }
@@ -57,10 +52,10 @@ class BarangController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Seo  $seo
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Seo $seo)
     {
         //
     }
@@ -69,10 +64,10 @@ class BarangController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Seo  $seo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Seo $seo)
     {
         //
     }
@@ -80,10 +75,10 @@ class BarangController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Seo  $seo
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Seo $seo)
     {
         //
     }

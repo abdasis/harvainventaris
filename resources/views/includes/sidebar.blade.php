@@ -88,9 +88,6 @@
                             <li>
                                 <a href="{{ route('barang.create') }}">Tambah Barang</a>
                             </li>
-                            <li>
-                                <a href="{{ route('barang.create') }}">Kategori Barang</a>
-                            </li>
                         </ul>
                     </div>
                 </li>
@@ -104,16 +101,10 @@
                     <div class="collapse" id="suppliers">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="ecommerce-dashboard.html">Dashboard</a>
+                                <a href="{{ route('suppliers.create') }}">Tambah Supplier</a>
                             </li>
                             <li>
-                                <a href="#">Products</a>
-                            </li>
-                            <li>
-                                <a href="#">Tambah supplier</a>
-                            </li>
-                            <li>
-                                <a href="#">Kategori supplier</a>
+                                <a href="{{ route('suppliers.index') }}">Daftar Supplier</a>
                             </li>
                         </ul>
                     </div>
