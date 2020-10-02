@@ -125,6 +125,7 @@
                 url: "/admin/kategori-barang/"+id+'/edit',
                 method: 'GET',
                 success: function(data){
+                    console.log(data)
                     $('#standard-modal').find('.modal-body').html(data)
                     $('#standard-modalLabel').text('Sunting Kategori')
                     $('#standard-modal').modal('show')

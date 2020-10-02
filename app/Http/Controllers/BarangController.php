@@ -89,7 +89,8 @@ class BarangController extends Controller
      */
     public function edit($id)
     {
-        //
+        $barang = Barang::find($id);
+        return view('pages.barang.edit')->withBarang($barang);
     }
 
     /**
@@ -112,6 +113,12 @@ class BarangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $barang = Barang::find($id);
+        $barang->delete();
+        if ($barang) {
+            Session::flash('status', 'Barang berhasil dihapus');
+            Alert::success('Berhasil', 'Barang berhasil dihapus');
+        }
+        return redirect()->back();
     }
 }

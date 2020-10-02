@@ -126,7 +126,7 @@
                 }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                    url: "/admin/suppliers/" + id,
+                    url: "/admin/barang/" + id,
                     type: 'POST',
                     data: {id:id, _token:"{{ csrf_token() }}", _method:"DELETE"},
                     success: function (data) {
